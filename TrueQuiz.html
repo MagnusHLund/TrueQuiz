@@ -1,0 +1,31 @@
+<html>
+
+<head> <metacharset="utf-8">
+        <title>TrueQuiz</title>
+        <link rel="stylesheet" href="css/Main.css">
+        <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@200&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <div class="welcomeText">
+        <h1>TrueQuiz</h1>
+    </div>
+    <div class="container container__Main" id="menu">
+        <div class="container container__startGame"> <!-- Button to the start the game --> <button
+                onclick="getData()">Start game</button> <br>
+            <div class="box"> <label class="lobbyCode">Lobby code: (num)</label> </div>
+            <div class="box"> <!-- list of users, in the lobby -->
+                <p>Daniel</p>
+                <p>Magnus</p>
+                <p>KimTheHandsomeMan</p>
+            </div>
+        </div>
+        <div class="container container__joinGame"> <input type="text" placeholder="Lobby Code"> <input type="text"
+                placeholder="Username"> <br> <button>Join</button> </div>
+    </div>
+    <div id="countdown"></div>
+    <div id="question"> </div>
+</body>
+<script src="js/main.js"></script>
+
+</html>
