@@ -1,6 +1,6 @@
 const question = document.querySelector('#question');
 const menu = document.querySelector('#menu');
-const text = document.querySelector('.welcomeText');
+const text = document.querySelector('.welcomeText')
 let questionTracker = 0;
 async function getData() {
     const response = await fetch(`https://opentdb.com/api.php?amount=10&category=18&difficulty=easy&type=multiple`);
