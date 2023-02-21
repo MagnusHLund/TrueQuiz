@@ -19,7 +19,7 @@ async function getData() {
         if (questionTracker >= 9) {
             location.reload();
         }
-        var timeleft = 158765;
+        var timeleft = 15;
         var downloadTimer = setInterval(function () {
             if (timeleft <= 0) {
                 clearInterval(downloadTimer);
