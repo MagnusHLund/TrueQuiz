@@ -1,9 +1,13 @@
-<html>
+<!DOCTYPE html>
+<html lang='en'>
 
-<head> <metacharset="utf-8">
-        <title>TrueQuiz</title>
-        <link rel="stylesheet" href="css/Main.css">
-        <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@200&display=swap" rel="stylesheet">
+<head>
+    <meta charset="utf-8">
+    <title>TrueQuiz</title>
+    <link rel="stylesheet" href="./CSS/Main.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@200&display=swap" rel="stylesheet">
+    <script src="https://cdn.socket.io/socket.io-3.0.0.js"></script>
+    <script defer src="./JS/Main.js"></script>
 </head>
 
 <body>
@@ -11,21 +15,28 @@
         <h1>TrueQuiz</h1>
     </div>
     <div class="container container__Main" id="menu">
-        <div class="container container__startGame"> <!-- Button to the start the game --> <button
-                onclick="getData()">Start game</button> <br>
-            <div class="box"> <label class="lobbyCode">Lobby code: (num)</label> </div>
-            <div class="box"> <!-- list of users, in the lobby -->
-                <p>Daniel</p>
-                <p>Magnus</p>
-                <p>KimTheHandsomeMan</p>
+        <div class="container container__startGame">
+
+            <!-- Button to the start the game -->
+            <button id="startGame">Start game</button> <br>
+
+            <div class="box">
+                <label class="lobbyCode">Lobby code: (num)</label>
+            </div>
+
+            <!-- list of users, in the lobby -->
+            <div class="box" id="names">
             </div>
         </div>
-        <div class="container container__joinGame"> <input type="text" placeholder="Lobby Code"> <input type="text"
-                placeholder="Username"> <br> <button>Join</button> </div>
+        <div class="container container__joinGame">
+            <input type="text" placeholder="Lobby Code" id="roomCode">
+            <input type="text" placeholder="Username" id="changeNameText"> <br>
+            <button id="changeName">Join</button>
+        </div>
     </div>
     <div id="countdown"></div>
     <div id="question"> </div>
 </body>
-<script src="js/main.js"></script>
+<script src="./JS/Main.js"></script>
 
 </html>
