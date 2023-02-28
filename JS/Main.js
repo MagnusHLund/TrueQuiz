@@ -3,6 +3,8 @@ const socket = io('ws://localhost:8080');
 var question = document.querySelector('#question');
 var menu = document.querySelector('#menu');
 var text = document.querySelector('.welcomeText');
+var configSetting = document.querySelector('.quiz-options-container');
+
 var questionTracker = 0;
 
 
@@ -12,7 +14,19 @@ document.querySelector('#changeName').onclick = () => {
     socket.emit('change-name', nameText);
 }
 document.querySelector('#startGame').onclick = () => {
-    socket.emit('api-request');
+    let selectCategory = document.querySelector('#category').value;
+    let selectDifficulty = document.querySelector('#difficulty').value;
+    
+    console.log(selectCategory);
+    console.log(selectDifficulty);
+    if (selectCategory !== "") {
+        selectCategory = `&category=${selectCategory}`;
+    }
+    if (selectDifficulty !== "") {
+        selectDifficulty = `&difficulty=${selectDifficulty}`;
+    }
+    const apiURL = `https://opentdb.com/api.php?amount=10${selectCategory}${selectDifficulty}&type=multiple`
+    socket.emit('api-request', apiURL);
 }
 socket.on('update-name', text => {
 
@@ -26,6 +40,7 @@ socket.on('submit-apiResult', apiData => {
     if (menu.textContent !== "") {
         // Makes textContent empty 
         menu.textContent = "";
+        configSetting.textContent = "";
     }
     startGame(jsonData);
     function startGame(jsonData) {

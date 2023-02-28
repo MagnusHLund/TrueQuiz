@@ -27,9 +27,23 @@ io.on('connection', (socket) => {
         }
     });
 
-    socket.on('api-request', () => {
+    /* Quiz URL;
+     Base URL:
+     https://opentdb.com/api.php?amount=10
+
+     Base URL with category:
+     https://opentdb.com/api.php?amount=10&category=21
+
+     Base URL with difficulty:
+     https://opentdb.com/api.php?amount=10&difficulty=easy
+
+     Base URL with category and difficulty:
+     https://opentdb.com/api.php?amount=10&category=20&difficulty=easy
+    */
+    socket.on('api-request', (url) => {
         console.log("starting game...");
-        https.get(`https://opentdb.com/api.php?amount=10&category=18&difficulty=easy&type=multiple`, (res) => {
+        console.log(`Sending request to: ${url}`);
+        https.get(url, (res) => {
             let data = '';
             res.on('data', (chunk) => {
                 data += chunk;
