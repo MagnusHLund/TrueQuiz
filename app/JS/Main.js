@@ -4,10 +4,10 @@ var question = document.querySelector('#question');
 var menu = document.querySelector('#menu');
 var text = document.querySelector('.welcomeText');
 var configSetting = document.querySelector('.quiz-options-container');
-
+var countdown = document.querySelector('#countdown');
 var questionTracker = 0;
 
-
+countdown.style.display = 'none';
 
 document.querySelector('#changeName').onclick = () => {
     const nameText = document.querySelector('#changeNameText').value;
@@ -55,6 +55,7 @@ socket.on('submit-apiResult', apiData => {
         if (questionTracker >= 9) {
             location.reload();
         }
+        countdown.style.display = 'block';
         var timeleft = 15;
         var downloadTimer = setInterval(function () {
             if (timeleft <= 0) {
