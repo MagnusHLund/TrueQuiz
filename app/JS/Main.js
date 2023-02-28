@@ -114,10 +114,12 @@ socket.on('submit-apiResult', apiData => {
                 let button = document.createElement('button');
                 button.id = "quizButton";
                 if (patern[i] === correctAnswer) {
-                    button.innerHTML = `${patern[i]} Correct Answer`;
+                    button.innerHTML = `${patern[i]}`;
+                    button.className = "correctAnswer";
                     question.appendChild(button);
                 } else {
-                    button.innerHTML = `${patern[i]} Incorrect Answer`;
+                    button.innerHTML = `${patern[i]}`;
+                    button.className = "incorrectAnswer";
                     question.appendChild(button);
                 }
             }
