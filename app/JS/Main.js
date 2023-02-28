@@ -79,7 +79,7 @@ socket.on('submit-apiResult', apiData => {
         // 4 different paterns, so the possible answers are mixed
         const array1 = new Array(incorrectAnswers[1], incorrectAnswers[2], incorrectAnswers[0], correctAnswer);
         const array2 = new Array(incorrectAnswers[1], incorrectAnswers[0], correctAnswer, incorrectAnswers[2]);
-        const array3 = new Array(incorrectAnswers[2], correctAnswer, incorrectAnswers[1], incorrectAnswers[2]);
+        const array3 = new Array(incorrectAnswers[2], correctAnswer, incorrectAnswers[1], incorrectAnswers[0]);
         const array4 = new Array(correctAnswer, incorrectAnswers[0], incorrectAnswers[1], incorrectAnswers[2]);
 
         // Random numbers that gets number between 1-4
