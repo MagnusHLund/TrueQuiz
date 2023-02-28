@@ -85,7 +85,7 @@ socket.on('submit-apiResult', apiData => {
         // Random numbers that gets number between 1-4
         min = Math.ceil(1);
         max = Math.floor(5);
-        const random = Math.floor(Math.random() * (max - min) + min); // The maximum is exclusive and the minimum is inclusive
+        const random = Math.floor(Math.random() * (max - min) + min);
 
         // Switch case to which patern to use
         switch (random) {
