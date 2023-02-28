@@ -1,7 +1,9 @@
 body {
     padding: 0;
     margin: 0;
-    /* background-image: url('background.gif');    background-repeat: no-repeat;    background-size: cover; */}
+    /* background-image: url('background.gif');    background-repeat: no-repeat;    background-size: cover; */
+}
+
 .welcomeText {
     text-align: center;
     margin-top: 100px;
@@ -9,22 +11,26 @@ body {
     font-family: 'Roboto Mono', monospace;
     color: #000000;
 }
+
 input,
 button {
     display: block;
     margin: 0 auto;
 }
+
 .container__startGame {
     display: inline-block;
     margin-left: 40%;
     width: 20%;
     max-width: 50%;
 }
+
 .container__joinGame {
     margin-top: 5%;
     margin-right: 10%;
     float: right;
 }
+
 .box {
     font-family: 'Roboto Mono', monospace;
     font-weight: bold;
@@ -33,6 +39,31 @@ button {
     color: #000000;
     padding-left: 10%;
 }
+
 .lobbyCode {
     margin-left: 15%;
+}
+
+#quizButton {
+    font-family: 'Roboto Mono', monospace;
+    display: block;
+    padding: 10px 20px;
+    font-size: 16px;
+    text-align: center;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin: 10px auto;
+    transition: background-color 0.3s ease-in-out;
+
+}
+
+#quizButton:hover {
+    background-color: #3e8e41;
+}
+
+#quizButton:active {
+    background-color: #1e461e;
 }
