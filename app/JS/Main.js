@@ -1,5 +1,5 @@
 
-const socket = io('ws://localhost:8080');
+const socket = io('ws://localhost:3000');
 var question = document.querySelector('#question');
 var menu = document.querySelector('#menu');
 var text = document.querySelector('.welcomeText');
@@ -16,7 +16,7 @@ document.querySelector('#changeName').onclick = () => {
 document.querySelector('#startGame').onclick = () => {
     let selectCategory = document.querySelector('#category').value;
     let selectDifficulty = document.querySelector('#difficulty').value;
-    
+
     console.log(selectCategory);
     console.log(selectDifficulty);
     if (selectCategory !== "") {
@@ -37,6 +37,11 @@ socket.on('update-name', text => {
 socket.on('submit-apiResult', apiData => {
     const jsonData = JSON.parse(apiData);
     console.log(jsonData);
+
+    if (jsonData.response_code === 1) {
+        console.log("reloaded");
+        location.reload();
+    }
     if (menu.textContent !== "") {
         // Makes textContent empty 
         menu.textContent = "";
