@@ -7,13 +7,6 @@ var questionTracker = 0;
 
 
 
-socket.on('update-name', text => {
-
-    const para = document.createElement('p');
-    para.innerHTML = text;
-    document.querySelector('#names').appendChild(para)
-
-});
 document.querySelector('#changeName').onclick = () => {
     const nameText = document.querySelector('#changeNameText').value;
     socket.emit('change-name', nameText);
@@ -21,6 +14,12 @@ document.querySelector('#changeName').onclick = () => {
 document.querySelector('#startGame').onclick = () => {
     socket.emit('api-request');
 }
+socket.on('update-name', text => {
+
+    const para = document.createElement('p');
+    para.innerHTML = text;
+    document.querySelector('#names').appendChild(para)
+});
 socket.on('submit-apiResult', apiData => {
     const jsonData = JSON.parse(apiData);
     console.log(jsonData);
@@ -47,15 +46,60 @@ socket.on('submit-apiResult', apiData => {
             }
             timeleft -= 1;
         }, 1000);
-        console.log(`Correct Answer: ${jsonData.results[questionTracker].correct_answer}`);
         text.textContent = "";
         question.textContent = "";
         text.innerHTML = `${jsonData.results[questionTracker].question}`;
-        for (let a = 0; a < 3; a++) {
-            let answer = document.createElement('button');
-            answer.innerHTML = `${jsonData.results[questionTracker].incorrect_answers[a]}`;
-            answer.id = `${a}`;
-            question.appendChild(answer);
+
+        // Arrays of possible combinations
+        // NOTE: incorrectAnswers is an array, and correctAnswer is a normal string
+        const incorrectAnswers = jsonData.results[questionTracker].incorrect_answers;
+        const correctAnswer = jsonData.results[questionTracker].correct_answer;
+
+        // 4 different paterns, so the possible answers are mixed
+        const array1 = new Array(incorrectAnswers[1], incorrectAnswers[2], incorrectAnswers[0], correctAnswer);
+        const array2 = new Array(incorrectAnswers[1], incorrectAnswers[0], correctAnswer, incorrectAnswers[2]);
+        const array3 = new Array(incorrectAnswers[2], correctAnswer, incorrectAnswers[1], incorrectAnswers[2]);
+        const array4 = new Array(correctAnswer, incorrectAnswers[0], incorrectAnswers[1], incorrectAnswers[2]);
+
+        // Random numbers that gets number between 1-4
+        min = Math.ceil(1);
+        max = Math.floor(5);
+        const random = Math.floor(Math.random() * (max - min) + min); // The maximum is exclusive and the minimum is inclusive
+
+        // Switch case to which patern to use
+        switch (random) {
+            case 1:
+                displayPatern(array1);
+                break;
+            case 2:
+                displayPatern(array2);
+                break;
+            case 3:
+                displayPatern(array3);
+                break;
+            case 4:
+                displayPatern(array4);
+                break;
+            default:
+                console.log("No patern  found");
+                break;
+        }
+        // Function for displaying the patern,
+        // a button is created for every answer
+        // The button is assigned an id for css reasons
+        function displayPatern(patern) {
+            for (let i = 0; i < patern.length; i++) {
+
+                let button = document.createElement('button');
+                button.id = "quizButton";
+                if (patern[i] === correctAnswer) {
+                    button.innerHTML = `${patern[i]} Correct Answer`;
+                    question.appendChild(button);
+                } else {
+                    button.innerHTML = `${patern[i]} Incorrect Answer`;
+                    question.appendChild(button);
+                }
+            }
         }
         questionTracker += 1;
     }
