@@ -23,16 +23,20 @@ io.on('connection', (socket) => {
     /* Quiz URL;
      Base URL:
      https://opentdb.com/api.php?amount=10
-
+ 
+     There are 2 type of questions, True / False or multiple choice, in this project we use multiple choice:
+     https://opentdb.com/api.php?amount=10&type=multiple
+ 
      Base URL with category:
-     https://opentdb.com/api.php?amount=10&category=21
-
+     https://opentdb.com/api.php?amount=10&category=21&type=multiple
+ 
      Base URL with difficulty:
-     https://opentdb.com/api.php?amount=10&difficulty=easy
-
+     https://opentdb.com/api.php?amount=10&difficulty=easy&type=multiple
+ 
      Base URL with category and difficulty:
-     https://opentdb.com/api.php?amount=10&category=20&difficulty=easy
+     https://opentdb.com/api.php?amount=10&category=20&difficulty=easy&type=multiple
     */
+
     socket.on('api-request', (url, room) => {
         console.log(room);
         console.log("starting game...");
@@ -50,6 +54,5 @@ io.on('connection', (socket) => {
             console.error(err);
         });
     });
-
 });
 http.listen(3000, () => console.log('listening on http://localhost:3000'));

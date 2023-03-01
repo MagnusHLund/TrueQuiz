@@ -1,8 +1,8 @@
-
 const socket = io('ws://localhost:3000');
 var countdown = document.querySelector('#countdown');
-
+let quizPoints = 0;
 countdown.style.display = 'none';
+
 
 document.querySelector('#changeName').onclick = () => {
     const nameText = document.querySelector('#changeNameText').value;
@@ -27,6 +27,9 @@ document.querySelector('#startGame').onclick = () => {
     const apiURL = `https://opentdb.com/api.php?amount=10${selectCategory}${selectDifficulty}&type=multiple`
     socket.emit('api-request', apiURL, lobbyCode);
 }
+socket.addEventListener('message', (event) => {
+    console.log(event); // Prints "Number of connected clients: X"
+  });
 socket.on('update-name', text => {
 
     const lobbyCode = document.querySelector('#roomCode').value;
@@ -66,6 +69,8 @@ socket.on('submit-apiResult', apiData => {
         nextQuestion(jsonData);
     }
     function nextQuestion(jsonData) {
+        let hasAnswered = false;
+        console.log(`current points ${quizPoints}`);
         if (questionTracker >= 9) {
             location.reload();
         }
@@ -73,6 +78,10 @@ socket.on('submit-apiResult', apiData => {
         var timeleft = 15;
         var downloadTimer = setInterval(function () {
             if (timeleft <= 0) {
+                if (!hasAnswered) {
+                    quizPoints -= 2;
+                    console.log("You didnt answer in time -2 points");
+                }
                 clearInterval(downloadTimer);
                 document.getElementById("countdown").innerHTML = "Loading next question...";
                 nextQuestion(jsonData);
@@ -88,7 +97,16 @@ socket.on('submit-apiResult', apiData => {
         // Arrays of possible combinations
         // NOTE: incorrectAnswers is an array, and correctAnswer is a normal string
         const incorrectAnswers = jsonData.results[questionTracker].incorrect_answers;
-        const correctAnswer = jsonData.results[questionTracker].correct_answer;
+
+        // This is for getting the correct answer, some questions include the letter ', which is converted to &#039;
+        // to revert this you can use innerHTML to change it back &#039; => '
+        const tempCorrectAnswer = jsonData.results[questionTracker].correct_answer; // => &#039;For&#039; loops
+        const tempElement = document.createElement("div");
+        tempElement.innerHTML = tempCorrectAnswer;
+        const correctAnswer = tempElement.textContent; // => 'for' loops
+
+
+
 
         // 4 different paterns, so the possible answers are mixed
         const array1 = new Array(incorrectAnswers[1], incorrectAnswers[2], incorrectAnswers[0], correctAnswer);
@@ -123,18 +141,54 @@ socket.on('submit-apiResult', apiData => {
         // a button is created for every answer
         // The button is assigned an id for css reasons
         function displayPatern(patern) {
+
             for (let i = 0; i < patern.length; i++) {
 
                 let button = document.createElement('button');
-                button.id = "quizButton";
+                button.className = "quizButton";
+
                 if (patern[i] === correctAnswer) {
                     button.innerHTML = `${patern[i]}`;
-                    button.className = "correctAnswer";
+                    button.id = `q${i}`;
                     question.appendChild(button);
+
                 } else {
                     button.innerHTML = `${patern[i]}`;
-                    button.className = "incorrectAnswer";
+                    button.id = `q${i}`;
                     question.appendChild(button);
+                }
+            }
+            document.querySelector('#q0').onclick = () => {
+                const answer = document.querySelector('#q0').textContent;
+                checkAnswer(answer);
+            }
+            document.querySelector('#q1').onclick = () => {
+                const answer = document.querySelector('#q1').textContent;
+                checkAnswer(answer);
+            }
+            document.querySelector('#q2').onclick = () => {
+                const answer = document.querySelector('#q2').textContent;
+                checkAnswer(answer);
+            }
+            document.querySelector('#q3').onclick = () => {
+                const answer = document.querySelector('#q3').textContent;
+                checkAnswer(answer);
+            }
+
+
+            function checkAnswer(answer) {
+                if (!hasAnswered) {
+                    if (answer == correctAnswer) {
+                        console.log(`${answer} is correct`);
+                        quizPoints++;
+                    }
+                    else {
+                        console.log(`${answer} is incorrect`);
+                        quizPoints--;
+                    }
+                    hasAnswered = true;
+                } else {
+                    console.log("Already answered, wait for the next question");
                 }
             }
         }
