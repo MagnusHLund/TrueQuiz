@@ -3,6 +3,9 @@ TrueQuiz is a real-time quiz battle project that uses WebSockets and Socket.io
 to connect multiple clients and allow them to compete against each other in a trivia-style game.
 This project is built with Node.js and JavaScript and requires Node.js to be installed on the user's computer.
 
+# Note
+This project is relatively new, and is under heavy development.
+
 # Installation
 Make sure Node.js is installed on your computer. You can download it from the official website: https://nodejs.org/
 
