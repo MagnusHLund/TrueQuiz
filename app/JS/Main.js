@@ -17,8 +17,6 @@ document.querySelector('#startGame').onclick = () => {
     let selectCategory = document.querySelector('#category').value;
     let selectDifficulty = document.querySelector('#difficulty').value;
 
-    console.log(selectCategory);
-    console.log(selectDifficulty);
     if (selectCategory !== "") {
         selectCategory = `&category=${selectCategory}`;
     }

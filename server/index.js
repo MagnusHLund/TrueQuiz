@@ -4,8 +4,6 @@ const io = require('socket.io')(http, {
     cors: {
         origin: [
             "http://localhost:5500", 
-            "http://localhost:8080",
-            "https://cdn.socket.io/socket.io-3.0.0.js"
         ]
     }
 });
