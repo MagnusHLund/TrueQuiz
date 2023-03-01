@@ -1,21 +1,22 @@
 
 const socket = io('ws://localhost:3000');
-var question = document.querySelector('#question');
-var menu = document.querySelector('#menu');
-var text = document.querySelector('.welcomeText');
-var configSetting = document.querySelector('.quiz-options-container');
 var countdown = document.querySelector('#countdown');
-var questionTracker = 0;
 
 countdown.style.display = 'none';
 
 document.querySelector('#changeName').onclick = () => {
     const nameText = document.querySelector('#changeNameText').value;
-    socket.emit('change-name', nameText);
+    const roomCode = document.querySelector('#roomCode').value;
+    if (!nameText == '' && !roomCode == '') {
+        socket.emit('change-name', nameText, roomCode);
+    } else {
+        console.log("Couldnt join, please fill the form!");
+    }
 }
 document.querySelector('#startGame').onclick = () => {
     let selectCategory = document.querySelector('#category').value;
     let selectDifficulty = document.querySelector('#difficulty').value;
+    const lobbyCode = document.querySelector('#roomCode').value;
 
     if (selectCategory !== "") {
         selectCategory = `&category=${selectCategory}`;
@@ -24,15 +25,30 @@ document.querySelector('#startGame').onclick = () => {
         selectDifficulty = `&difficulty=${selectDifficulty}`;
     }
     const apiURL = `https://opentdb.com/api.php?amount=10${selectCategory}${selectDifficulty}&type=multiple`
-    socket.emit('api-request', apiURL);
+    socket.emit('api-request', apiURL, lobbyCode);
 }
 socket.on('update-name', text => {
+
+    const lobbyCode = document.querySelector('#roomCode').value;
+    let lobbyCodeText = document.querySelector('.lobbyCode');
+    lobbyCodeText.textContent = "Lobby code:";
+    lobbyCodeText.textContent += lobbyCode;
 
     const para = document.createElement('p');
     para.innerHTML = text;
     document.querySelector('#names').appendChild(para)
+
 });
+
 socket.on('submit-apiResult', apiData => {
+
+    let questionTracker = 0;
+    const question = document.querySelector('#question');
+    const menu = document.querySelector('#menu');
+    const text = document.querySelector('.welcomeText');
+    const configSetting = document.querySelector('.quiz-options-container');
+
+
     const jsonData = JSON.parse(apiData);
     console.log(jsonData);
 
