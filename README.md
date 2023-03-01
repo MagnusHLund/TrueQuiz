@@ -6,6 +6,9 @@ This project is built with Node.js and JavaScript and requires Node.js to be ins
 # Note
 This project is relatively new, and is under heavy development.
 
+# Live work updates:
+Currently working on point systems, and quiz button functionality
+
 # Installation
 Make sure Node.js is installed on your computer. You can download it from the official website: https://nodejs.org/
 
