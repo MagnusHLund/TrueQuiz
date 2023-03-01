@@ -17,8 +17,8 @@ Install the required dependencies by running the following command:
 
 # Usage
 To run the server, navigate to the TRUEQUIZ\server directory and run the following command:
-
 ``node .``
+
 Once the server is running, you can open the frontend by either:
 
 Opening the index.html file located in the TRUEQUIZ\app directory in your browser.
