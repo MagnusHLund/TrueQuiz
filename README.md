@@ -4,10 +4,7 @@ to connect multiple clients and allow them to compete against each other in a tr
 This project is built with Node.js and JavaScript and requires Node.js to be installed on the user's computer.
 
 # Note
-This project is relatively new, and is under heavy development.
-
-# Live work updates:
-Currently working on point systems, and quiz button functionality
+This project might not seem to be near perfect. But this is mostly to understand websocket's functionality by using rooms from socket.io
 
 # Installation
 Make sure Node.js is installed on your computer. You can download it from the official website: https://nodejs.org/
