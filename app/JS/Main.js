@@ -1,6 +1,7 @@
 const socket = io('ws://localhost:3000');
 var countdown = document.querySelector('#countdown');
 let quizPoints = 0;
+
 countdown.style.display = 'none';
 
 
@@ -10,7 +11,7 @@ document.querySelector('#changeName').onclick = () => {
     if (!nameText == '' && !roomCode == '') {
         socket.emit('change-name', nameText, roomCode);
     } else {
-        console.log("Couldnt join, please fill the form!");
+        console.log("Couldn't join, please fill the form!");
     }
 }
 document.querySelector('#startGame').onclick = () => {
@@ -25,11 +26,16 @@ document.querySelector('#startGame').onclick = () => {
         selectDifficulty = `&difficulty=${selectDifficulty}`;
     }
     const apiURL = `https://opentdb.com/api.php?amount=10${selectCategory}${selectDifficulty}&type=multiple`
-    socket.emit('api-request', apiURL, lobbyCode);
+
+    if (!lobbyCode == '') {
+        socket.emit('api-request', apiURL, lobbyCode);
+    } else {
+        console.log("Not a valid lobby code");
+    }
 }
 socket.addEventListener('message', (event) => {
     console.log(event); // Prints "Number of connected clients: X"
-  });
+});
 socket.on('update-name', text => {
 
     const lobbyCode = document.querySelector('#roomCode').value;
@@ -71,7 +77,7 @@ socket.on('submit-apiResult', apiData => {
     function nextQuestion(jsonData) {
         let hasAnswered = false;
         console.log(`current points ${quizPoints}`);
-        if (questionTracker >= 9) {
+        if (questionTracker >= 10) {
             location.reload();
         }
         countdown.style.display = 'block';
@@ -80,7 +86,7 @@ socket.on('submit-apiResult', apiData => {
             if (timeleft <= 0) {
                 if (!hasAnswered) {
                     quizPoints -= 2;
-                    console.log("You didnt answer in time -2 points");
+                    console.log("You didn't answer in time -2 points");
                 }
                 clearInterval(downloadTimer);
                 document.getElementById("countdown").innerHTML = "Loading next question...";
@@ -88,7 +94,7 @@ socket.on('submit-apiResult', apiData => {
             } else {
                 document.getElementById("countdown").innerHTML = timeleft + " seconds left!";
             }
-            timeleft -= 1;
+            timeleft--;
         }, 1000);
         text.textContent = "";
         question.textContent = "";
